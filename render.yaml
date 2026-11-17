@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: sentiment-app
+    runtime: docker              # builds the Dockerfile from Phase 8
+    plan: free
+    region: frankfurt
+    branch: main
+    healthCheckPath: /health
+    autoDeployTrigger: checksPass  # deploy only after GitHub CI passes
+    envVars:
+      - key: DATABASE_URL
+        sync: false              # Render asks for the value; it never lives in Git
