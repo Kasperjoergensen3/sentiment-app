@@ -1,0 +1,25 @@
+# Python / tooling
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# Secrets and local state
+.env
+*.db
+
+# Data and large artifacts (commit only small, intentional files)
+data/*
+!data/reviews.csv
+models/*.pt
+models/*.bin
+models/*.safetensors
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
