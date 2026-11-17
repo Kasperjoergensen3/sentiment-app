@@ -1,0 +1,25 @@
+<!-- templates/index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sentiment checker</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main>
+    <h1>Sentiment checker</h1>
+    <form id="predict-form">
+      <label for="text">Type a sentence</label>
+      <textarea id="text" rows="4" maxlength="1000" required></textarea>
+      <button type="submit">Analyse</button>
+    </form>
+    <p id="result" aria-live="polite"></p>
+
+    <h2>Recent predictions</h2>
+    <ul id="history"></ul>
+  </main>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
