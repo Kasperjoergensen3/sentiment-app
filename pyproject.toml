@@ -1,7 +1,7 @@
 [project]
 name = "sentiment-app"
 version = "0.1.0"
-description = "Add your description here"
+description = "A small AI web app: FastAPI + SQL + scikit-learn"
 readme = "README.md"
 authors = [
     { name = "Kasperjoergensen3", email = "Kasperjoergensen3@gmail.com" }
@@ -33,3 +33,19 @@ dev = [
     "pytest-cov>=7.1.0",
     "ruff>=0.17.5",
 ]
+
+[tool.uv]
+required-version = ">=0.13"       # everyone, including CI, uses a recent uv
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]   # errors, pyflakes, imports, bugbear, upgrades, simplify
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+
+
