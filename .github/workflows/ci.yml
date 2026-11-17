@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read                  # least privilege: CI only needs to read the code
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true        # a new push cancels the outdated run
+
+jobs:
+  test:
+    name: Lint and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v10.3.2   # full version tag; "@v10" does not resolve
+      - name: Install locked dependencies
+        run: uv sync --locked              # fails if uv.lock is out of date
+      - name: Lint
+        run: uv run ruff check .
+      - name: Format check
+        run: uv run ruff format --check .
+      - name: Tests
+        run: uv run pytest --cov=sentiment_app --cov-report=term-missing
+
+  docker:
+    name: Docker build and smoke test
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build image
+        run: docker build -t sentiment-app:ci .
+      - name: Start container and hit /health
+        run: |
+          docker run -d --name app -p 8000:8000 sentiment-app:ci
+          for i in $(seq 1 30); do
+            if curl -fsS http://localhost:8000/health; then exit 0; fi
+            sleep 1
+          done
+          docker logs app
+          exit 1
