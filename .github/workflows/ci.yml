@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: astral-sh/setup-uv@v10.3.2   # full version tag; "@v10" does not resolve
+      - uses: astral-sh/setup-uv@v10.4.0   # full version tag; "@v10" does not resolve
       - name: Install locked dependencies
         run: uv sync --locked              # fails if uv.lock is out of date
       - name: Lint
